@@ -34,17 +34,17 @@ float snoise(vec2 v){
 float getElevation(vec3 position) {
   float elevation = 0.0;
   float amp = 30.0;   //8
-  float freq = -0.002; //0.008
+  float freq = -0.0015; //0.008
   float gain = 0.25;
   float lac = 3.0;
 
   for (int i = 1; i <= 4; i++)
   {
-    elevation += (amp * snoise(position.xy * freq));
+    elevation += (amp * snoise(vec2(position.x, position.y + 150.0) * freq));
     amp *= gain;
     freq *= lac;
   }
-  return elevation;
+  return elevation + length(vec2(position.x, position.y) * 0.02);
 }
 
 

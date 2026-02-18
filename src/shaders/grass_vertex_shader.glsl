@@ -139,17 +139,17 @@ float snoise(vec2 v){
 float getElevation(vec3 position) {
   float elevation = 0.0;
   float amp = 30.0;   //8
-  float freq = -0.002; //0.008
+  float freq = -0.0015; //0.008
   float gain = 0.25;
   float lac = 3.0;
 
   for (int i = 1; i <= 4; i++)
   {
-    elevation += (amp * snoise(vec2(position.x, -position.z) * freq));
+    elevation += (amp * snoise(vec2(position.x, -position.z + 150.0) * freq));
     amp *= gain;
     freq *= lac;
   }
-  return elevation;
+  return elevation + length(vec2(position.x, -position.z) * 0.02);
 }
 
 const vec3 BASE_COLOUR = vec3(0.2118, 0.5569, 0.1569);
@@ -238,7 +238,7 @@ void main() {
 
     //Blend normal
     float distanceBlend = smoothstep(0.0, 1.0, distance(cameraPosition, grassBladeWorldPos));
-    grassLocalNormal = mix(grassLocalNormal, vec3(0.0, 1.0, 0.0), distanceBlend * 0.4);                 //0.5 in video
+    grassLocalNormal = mix(grassLocalNormal, vec3(0.0, 1.0, 0.0), distanceBlend);                 //0.5 in video
     grassLocalNormal = normalize(grassLocalNormal);
 
     // Viewspace thicken

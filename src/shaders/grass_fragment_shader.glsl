@@ -77,6 +77,7 @@ void main() {
 
     vec3 colour = baseColor * ambientLighting + specular * 0.25;
     colour *= ao;
+    colour *= 0.6;
     //colour = baseColor * ambientLighting;
 
     //colour = (vec3(vWindLeanDebug));

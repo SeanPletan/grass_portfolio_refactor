@@ -3,10 +3,10 @@
   padding: 0;
 }
 
-html,
+/* html,
 body {
   overflow: hidden;
-}
+} */
 
 .webgl {
   position: fixed;
@@ -14,3 +14,115 @@ body {
   left: 0;
   outline: none;
 }
+
+/* #overlay {
+     position: absolute;
+     top: 20px;
+     bottom: 20px;
+     left: 20vw;
+     width: 60vw;
+     background: rgba(0, 0, 0, 0.8);
+     color: white;
+     padding-top: 20px;
+     padding-left: 20px;
+     padding-bottom: 20px;
+     padding-right: 5px;
+     border-radius: 6px;
+     display: none;
+     overflow: hidden;
+}
+#overlay::before {
+     content: "";
+     position: absolute;
+     inset: 3px;
+     border: 1px solid rgb(200, 200, 200);
+     border-radius: 6px;
+     pointer-events: none;
+} */
+
+#overlay-content {
+     height: 100%;
+     margin: none;
+     padding-top: none;
+     overflow-y: auto;
+     padding-right: 6px;
+} 
+
+#overlay {
+     position: fixed;
+     height: calc(100vh - 40px);
+     padding: 20px 0px 20px 20px;
+     right: 0vw;
+     width: calc(60vw - 40px);
+     background: rgba(0, 0, 0, .7);
+     backdrop-filter: blur(6px);
+     color: rgb(255, 255, 255);
+     display: none;
+     overflow: hidden;
+}
+
+#scroll-space {
+     height: 300vh;
+     /* controls scroll length */
+}
+
+ /* Dropdown Button */
+ .dropbtn {
+      background-color: rgba(0, 0, 0, 0.8);
+      color: white;
+      font-size: 22px;
+      border: none;
+      padding: 2px;
+      width: 35px;
+      height: 35px;
+      border-radius: 7px;
+ }
+
+ /* The container <div> - needed to position the dropdown content */
+ #dropdown {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      display: none;
+ }
+
+ /* Dropdown Content (Hidden by Default) */
+ .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: rgba(0, 0, 0, 0.9);
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+      border-radius: 7px;
+ }
+
+ /* Links inside the dropdown */
+ .dropdown-content a {
+      color: white;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+ }
+
+ /* Change color of dropdown links on hover */
+ #dropdown-content a:hover {
+      background-color: #ddd;
+ }
+
+ /* Show the dropdown menu on hover */
+ #dropdown:hover .dropdown-content {
+      display: block;
+ }
+
+ /* Change the background color of the dropdown button when the dropdown content is shown */
+ #dropdown:hover .dropbtn {
+      background-color: rgba(0, 0, 0, 0.9);
+ }
+
+
+
+
+/*VISUAL GUIDE FROM APPLE LIQUID GLASS UI:*/
+
+ /*https: //www.apple.com/newsroom/images/2025/06/apple-introduces-a-delightful-and-elegant-new-software-design/article/Apple-WWDC25-Liquid-Glass-Icon-Composer-250609_big.jpg.large.jpg*/
