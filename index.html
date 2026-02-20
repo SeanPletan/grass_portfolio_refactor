@@ -7,23 +7,30 @@
      <link rel="stylesheet" type="text/css" href="/src/style.css">
      <link rel="icon" type="image/svg+xml" href="/grass.svg" />
      <meta charset="UTF-8" />
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
      <canvas id="webgl" class="webgl"></canvas>
-     <div id="dropdown">
-          <button class="dropbtn">
-               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
-                    <path fill-rule="evenodd"
-                         d="M3 5.25a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 5.25Zm0 4.5A.75.75 0 0 1 3.75 9h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 9.75Zm0 4.5a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75Zm0 4.5a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75Z"
-                         clip-rule="evenodd" />
-               </svg>
-          </button>
-          <div class="dropdown-content">
-               <a href="#">Link 1</a>
-               <a href="#/projects">Link 2</a>
-               <a href="#/contact">Link 3</a>
+     <div id="nav">
+          <div class="nav-button">
+               <h1>About Me</h1>
           </div>
+          <div class="nav-button">
+               <h1>Projects</h1>
+          </div>
+          <div class="nav-button">
+               <h1>Blog</h1>
+          </div>
+          <div class="nav-button">
+               <h1>Contact Me</h1>
+          </div>
+     </div>
+     <div id="name">
+          <h1>Sean Pletan</h1>
+          <h3>portfolio</h3>
      </div>
      <div id="overlay">
           <div id="overlay-content"></div>

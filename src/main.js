@@ -99,12 +99,13 @@ scene.add(ground);
 
 //Make sky
 const hdrLoader = new HDRLoader();
-const envMap = await hdrLoader.loadAsync('/purenight.hdr');
+const envMap = await hdrLoader.loadAsync('/puresky.hdr');
 envMap.mapping = THREE.EquirectangularReflectionMapping;
 scene.environment = envMap;
 scene.background = envMap;
 //scene.background *= 1.0;
-scene.backgroundRotation.y += Math.PI ;
+scene.backgroundRotation.y += (Math.PI * 1.125);
+scene.environmentRotation.y += (Math.PI * 1.125);
 
 //Make grass
 const uniforms = {
@@ -155,7 +156,6 @@ scene.add(camera);
 
 
 const overlay = document.getElementById("overlay");
-const dropdown = document.getElementById("dropdown");
 
 const routes = {
      '#/': getAboutMePage,
@@ -166,7 +166,7 @@ const routes = {
 
 window.addEventListener("click", (event) => {
 
-     if (overlay.contains(event.target) || dropdown.contains(event.target))
+     if (overlay.contains(event.target))
           return;
      // Convert mouse position to normalized device coordinates (-1 to +1)
      mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
@@ -181,12 +181,10 @@ window.addEventListener("click", (event) => {
 
           if (clickedObject.userData.clickable) {
                utils.showOverlay(event.clientX, event.clientY, clickedObject, overlay);
-               utils.showOverlay(event.clientX, event.clientY, clickedObject, dropdown);
                return;
           }
      }
      utils.hideOverlay(overlay);
-     utils.hideOverlay(dropdown);
 });
 
 function lerp(a, b, t) {
@@ -236,18 +234,28 @@ const tick = () => {
      const elapsedTime = clock.getElapsedTime();
      uniforms.time.value = elapsedTime;
      camera.fov = lerp(80, 100, scrollValue);
-     camera.position.z = lerp(-310, 3, scrollValue);
-     camera.position.x = lerp(0, -40, scrollValue);
-     camera.rotation.y = lerp(0, -Math.PI / 4, scrollValue);
+     camera.position.z = lerp(-310, -35, scrollValue);
+     camera.position.x = lerp(0, -35, scrollValue);
+     camera.rotation.y = lerp(0, -Math.PI * 0.2, scrollValue);
      camera.updateProjectionMatrix();
      //controls.update();
-     const v = camera.position;
-     console.log(
-          `(${v.x.toFixed(2)}, ${v.y.toFixed(2)}, ${v.z.toFixed(2)})`
-     );
+     //const v = camera.position;
+     // console.log(
+     //      `(${v.x.toFixed(2)}, ${v.y.toFixed(2)}, ${v.z.toFixed(2)})`
+     // );
      renderer.render(scene, camera);
      stats.end();
      window.requestAnimationFrame(tick);
 
 };
 tick();
+
+
+//weird camera pathing
+// camera.fov = lerp(80, 110, scrollValue);
+// camera.position.z = lerp(-310, -20, scrollValue);
+// camera.position.y = lerp(10, -5, scrollValue);
+// camera.position.x = lerp(0, 30, scrollValue);
+// camera.rotation.z = lerp(-Math.PI, -Math.PI / 1.2, scrollValue);
+// camera.rotation.y = lerp(0, Math.PI / 3.5, scrollValue);
+// camera.rotation.x = lerp(Math.PI, Math.PI / 1.25, scrollValue);
