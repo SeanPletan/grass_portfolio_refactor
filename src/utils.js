@@ -1,4 +1,4 @@
-export function showOverlay(x, y, object, overlay) {
+export function showOverlay(overlay) {
      overlay.style.display = "block";
 }
 

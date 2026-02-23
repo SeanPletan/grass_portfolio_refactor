@@ -1,181 +1,26 @@
 export default function getProjectsPage() {
-     return `<h1>Projects</h1><p>Great question — the “best” way today is:
-
-Use CSS for animation + JavaScript only to toggle state.
-
-Modern dropdowns should:
-
-
-Avoid heavy JS animation libraries unless necessary
-
-
-Use classList.toggle() to control open/close
-
-
-Let CSS handle transitions (GPU-accelerated = smoother)
-
-
-Be accessible (keyboard + ARIA support)
-
-
-
-✅ Best Practice Approach (Clean + Smooth)
-1️⃣ Basic Structure
-<div class="dropdown">
-  <button class="dropdown-toggle" aria-expanded="false">
-    Menu
-  </button>
-
-  <div class="dropdown-menu">
-    <a href="#">Item 1</a>
-    <a href="#">Item 2</a>
-    <a href="#">Item 3</a>
-  </div>
-</div>
-
-
-2️⃣ CSS (Smooth Animation Without Jank)
-Instead of animating height, use:
-
-
-opacity
-
-
-transform
-
-
-visibility
-
-
-These animate much smoother.
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  min-width: 180px;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-  padding: 8px 0;
-
-  opacity: 0;
-  transform: translateY(-10px);
-  visibility: hidden;
-  transition: 
-    opacity 200ms ease,
-    transform 200ms ease,
-    visibility 200ms;
-}
-
-.dropdown.open .dropdown-menu {
-  opacity: 1;
-  transform: translateY(0);
-  visibility: visible;
-}
-
-✨ This gives you:
-
-
-Fade in
-
-
-Slight slide down
-
-
-Smooth GPU animation
-
-
-No layout shift
-
-
-
-3️⃣ JavaScript (Minimal & Clean)
-const dropdown = document.querySelector('.dropdown');
-const toggle = dropdown.querySelector('.dropdown-toggle');
-
-toggle.addEventListener('click', () => {
-  const isOpen = dropdown.classList.toggle('open');
-  toggle.setAttribute('aria-expanded', isOpen);
-});
-
-// Close when clicking outside
-document.addEventListener('click', (e) => {
-  if (!dropdown.contains(e.target)) {
-    dropdown.classList.remove('open');
-    toggle.setAttribute('aria-expanded', false);
-  }
-});
-
-
-🎨 How To Make It Look More Modern
-Add scale animation
-transform: translateY(-10px) scale(0.98);
-
-Add blur glass effect
-backdrop-filter: blur(12px);
-background: rgba(255,255,255,0.8);
-
-Add subtle hover effect
-.dropdown-menu a:hover {
-  background: #f5f5f5;
-}
-
-
-🚀 If You Want Even Better Animations
-If you're building something more advanced (like mega menus or mobile nav):
-🔥 Use:
-
-
-CSS transitions (simple menus)
-
-
-Web Animations API (advanced control)
-
-
-GSAP (complex timeline animations)
-
-
-But for 90% of cases, pure CSS transitions are best.
-
-⚡ Pro-Level Improvements
-If you want production-grade quality:
-1️⃣ Add keyboard support
-
-
-Close on Escape
-
-
-Open with Enter
-
-
-Navigate with arrow keys
-
-
-2️⃣ Use pointerdown instead of click
-Feels snappier on mobile.
-3️⃣ Add small delay on close (for hover menus)
-Prevents flicker.
-
-💎 Summary
-Best modern approach:
-FeatureBest PracticeAnimationCSS (opacity + transform)Toggle logicJS class togglePerformanceAvoid animating heightLookShadow + subtle scaleAccessibilityARIA + keyboard
-
-If you’d like, tell me:
-
-
-Is this for a navbar?
-
-
-Desktop only or mobile too?
-
-
-Tailwind / React / vanilla JS?
-
-
-I can tailor a more advanced version for your stack.</p>`;
+     return `
+<h1>Projects</h1></br>
+<p>Proin tincidunt tempus dui vitae pellentesque. Integer egestas volutpat tortor nec varius. Ut ante nunc, vehicula eu mauris at, pharetra mollis metus. Proin efficitur, elit a dapibus porttitor, nisl massa eleifend augue, ut fermentum dolor lorem et lacus. Phasellus et augue at augue tincidunt aliquet. Nunc sit amet felis non odio porta egestas. Phasellus ut urna hendrerit, vulputate eros vitae, hendrerit magna. Nullam hendrerit lorem nibh. Nam nec nulla aliquet, sodales risus auctor, bibendum dolor. Donec in imperdiet sapien. Aenean urna augue, mattis ac placerat vitae, pharetra at ex. Donec facilisis mauris finibus lectus sollicitudin consequat. Curabitur vel felis consequat, convallis justo in, euismod metus. Sed at tellus libero.
+</br>
+</br>
+Ut ullamcorper elit tortor, at varius odio mollis eget. Maecenas gravida neque ligula, quis tincidunt risus fringilla a. Quisque auctor velit vel nisi dapibus, nec auctor justo porttitor. Nullam lobortis, nisi et volutpat suscipit, elit ante ullamcorper metus, eget semper nibh massa id lectus. Vestibulum ligula mauris, vestibulum luctus erat sit amet, iaculis pulvinar justo. Cras pellentesque, mi sed vulputate viverra, orci nisl maximus nisi, in fermentum ante arcu quis metus. Nulla pretium neque ex, non tincidunt arcu hendrerit quis. Cras at justo id leo bibendum semper nec egestas massa.
+</br>
+</br>
+Donec sit amet pretium metus. Nunc et fermentum ante. Proin lobortis urna vel metus mattis luctus. Phasellus quis tortor nec purus semper pretium. Mauris finibus purus vel finibus egestas. Pellentesque quam ipsum, tristique sit amet imperdiet ut, semper posuere elit. Maecenas semper, leo quis sagittis tristique, nibh velit aliquam felis, sit amet convallis nunc nulla nec ex. Sed molestie, tellus id facilisis viverra, elit eros placerat erat, non sagittis erat lectus eu velit. Sed egestas congue aliquet. Praesent vehicula eget justo non auctor. Donec rhoncus lorem quis quam dignissim hendrerit. Nunc eget lorem quis sapien molestie feugiat a sed quam.
+</br>
+</br>
+Nullam diam nisi, egestas vitae accumsan nec, laoreet vitae lacus. Vestibulum sollicitudin ultrices nibh, non congue est auctor sit amet. Sed et suscipit erat. Vestibulum euismod, purus non aliquet sagittis, eros turpis pretium odio, sit amet rhoncus odio urna a lacus. Sed dignissim, dolor ac vulputate fringilla, metus augue commodo risus, vel lobortis eros ante sit amet ipsum. In lacinia sem quis est elementum scelerisque. Integer sapien ligula, cursus eget accumsan nec, feugiat sed dolor.
+</br>
+</br>
+Morbi porttitor euismod erat, quis porttitor nunc tempus sit amet. In aliquet ut ex at commodo. Integer nec nisl viverra, fringilla dui non, fringilla nulla. Vestibulum sit amet auctor libero. Etiam vestibulum facilisis hendrerit. Suspendisse potenti. Morbi et aliquam libero, egestas imperdiet diam. Phasellus bibendum convallis tortor, vel vestibulum orci bibendum ut. Vestibulum semper vestibulum tellus nec gravida. Ut ultricies sed quam ut vulputate. Praesent erat erat, tincidunt in pellentesque non, laoreet sed nunc. 
+</br>
+</br>
+Ut ullamcorper elit tortor, at varius odio mollis eget. Maecenas gravida neque ligula, quis tincidunt risus fringilla a. Quisque auctor velit vel nisi dapibus, nec auctor justo porttitor. Nullam lobortis, nisi et volutpat suscipit, elit ante ullamcorper metus, eget semper nibh massa id lectus. Vestibulum ligula mauris, vestibulum luctus erat sit amet, iaculis pulvinar justo. Cras pellentesque, mi sed vulputate viverra, orci nisl maximus nisi, in fermentum ante arcu quis metus. Nulla pretium neque ex, non tincidunt arcu hendrerit quis. Cras at justo id leo bibendum semper nec egestas massa.
+</br>
+</br>
+Donec sit amet pretium metus. Nunc et fermentum ante. Proin lobortis urna vel metus mattis luctus. Phasellus quis tortor nec purus semper pretium. Mauris finibus purus vel finibus egestas. Pellentesque quam ipsum, tristique sit amet imperdiet ut, semper posuere elit. Maecenas semper, leo quis sagittis tristique, nibh velit aliquam felis, sit amet convallis nunc nulla nec ex. Sed molestie, tellus id facilisis viverra, elit eros placerat erat, non sagittis erat lectus eu velit. Sed egestas congue aliquet. Praesent vehicula eget justo non auctor. Donec rhoncus lorem quis quam dignissim hendrerit. Nunc eget lorem quis sapien molestie feugiat a sed quam.
+</br>
+</br>
+Nullam diam nisi, egestas vitae accumsan nec, laoreet vitae lacus. Vestibulum sollicitudin ultrices nibh, non congue est auctor sit amet. Sed et suscipit erat. Vestibulum euismod, purus non aliquet sagittis, eros turpis pretium odio, sit amet rhoncus odio urna a lacus. Sed dignissim, dolor ac vulputate fringilla, metus augue commodo risus, vel lobortis eros ante sit amet ipsum. In lacinia sem quis est elementum scelerisque. Integer sapien ligula, cursus eget accumsan nec, feugiat sed dolor.</p>`;
 }

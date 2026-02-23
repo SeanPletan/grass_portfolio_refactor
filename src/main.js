@@ -5,6 +5,9 @@ import './routes/contact'
 import './routes/projects'
 import { HDRLoader } from 'three/addons/loaders/HDRLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
+import { SMAAPass } from 'three/examples/jsm/postprocessing/SMAAPass.js';
 import Stats from 'stats.js';
 import fshGrassText from './shaders/grass_fragment_shader.glsl?raw';
 import vshGrassText from './shaders/grass_vertex_shader.glsl?raw';
@@ -14,7 +17,7 @@ import getAboutMePage from './routes/about'
 import getProjectsPage from './routes/projects'
 import getContactPage from './routes/contact'
 
-var stats = new Stats();
+//var stats = new Stats();
 //stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
 //document.body.appendChild(stats.dom);
 
@@ -90,7 +93,6 @@ const groundMaterial = new THREE.ShaderMaterial({
      vertexShader: vshGroundText,
      fragmentShader: fshGroundText
 });
-//const groundMaterial = new THREE.MeshBasicMaterial();
 const groundGeometry = new THREE.PlaneGeometry(GRASS_PATCH_SIZE * 2, GRASS_PATCH_SIZE * 2, 512, 512);
 const ground = new THREE.Mesh(groundGeometry, groundMaterial);
 ground.rotateX(-Math.PI / 2);
@@ -119,10 +121,10 @@ const grassMaterial = new THREE.ShaderMaterial({
      fragmentShader: fshGrassText,
      side: THREE.FrontSide,
 });
-
 const grassGeometry = createGeometry(GRASS_SEGMENTS);
 const grass = new THREE.Mesh(grassGeometry, grassMaterial);
 scene.add(grass);
+
 
 //Make monolith
 const monolithGeometry = new THREE.BoxGeometry(10, 75, 10);
@@ -144,13 +146,9 @@ clickable.push(monolith)
 
 
 
-const camera = new THREE.PerspectiveCamera(90, screenSizes.width / screenSizes.height, 0.1, 2000);
-//const camera = new THREE.OrthographicCamera();
+const camera = new THREE.PerspectiveCamera(80, screenSizes.width / screenSizes.height, 0.1, 750);
 camera.position.set(0, 10, -310);
-camera.lookAt(0, 0, 0); //position 0
-
-//camera.position.set(380, 15, 260);
-//camera.lookAt(0,-100, 0) //position 1
+camera.lookAt(0, 0, 0);
 scene.add(camera);
 
 
@@ -176,11 +174,13 @@ window.addEventListener("click", (event) => {
 
      const intersects = raycaster.intersectObjects(clickable, true);
 
+     const links = document.getEle
+
      if (intersects.length > 0) {
           const clickedObject = intersects[0].object;
 
           if (clickedObject.userData.clickable) {
-               utils.showOverlay(event.clientX, event.clientY, clickedObject, overlay);
+               utils.showOverlay(overlay);
                return;
           }
      }
@@ -196,9 +196,9 @@ let scrollValue = 0;
 
 const scrollTarget = document.getElementById('webgl');
 window.addEventListener("wheel", (event) => {
-     if (event.target == scrollTarget) {     
-     scrollValue += event.deltaY * 0.001;
-     scrollValue = Math.min(Math.max(scrollValue, 0), 1);
+     if (event.target == scrollTarget) {
+          scrollValue += event.deltaY * 0.001;
+          scrollValue = Math.min(Math.max(scrollValue, 0), 1);
      }
      else
           console.log("not in da div");
@@ -214,37 +214,53 @@ function handleRoute() {
 window.addEventListener('hashchange', handleRoute);
 window.addEventListener('load', handleRoute);
 
-window.addEventListener('resize', () => {
-     screenSizes.width = window.innerWidth;
-     screenSizes.height = window.innerHeight;
-     camera.aspect = screenSizes.width / screenSizes.height;
-     camera.updateProjectionMatrix();
-     renderer.setSize(screenSizes.width, screenSizes.height);
-     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-})
-
-
 //const controls = new OrbitControls(camera, canvas);
 //controls.target.set(0, 5, 0);
 
-const clock = new THREE.Clock()
+
+const renderPass = new RenderPass(scene, camera);
+const composer = new EffectComposer(renderer);
+composer.addPass(renderPass);
+
+const smaaPass = new SMAAPass(
+     screenSizes.width * renderer.getPixelRatio(),
+     screenSizes.height * renderer.getPixelRatio()
+);
+
+composer.addPass(smaaPass);
+
+function onResize() {
+     const pixelRatio = renderer.getPixelRatio();
+     renderer.setSize(screenSizes.width, screenSizes.height);
+
+     camera.aspect = screenSizes.width / screenSizes.height;
+     camera.updateProjectionMatrix();
+
+     composer.setSize(screenSizes.width, screenSizes.height);
+
+     smaaPass.setSize(screenSizes.width * pixelRatio, screenSizes.height * pixelRatio);
+}
+
+window.addEventListener('resize', onResize);
+
+const timer = new THREE.Timer();
+timer.connect(document);
 
 const tick = () => {
-     stats.begin();
-     const elapsedTime = clock.getElapsedTime();
+     //stats.begin();
+     timer.update();
+     const elapsedTime = timer.getElapsed();
      uniforms.time.value = elapsedTime;
      camera.fov = lerp(80, 100, scrollValue);
      camera.position.z = lerp(-310, -35, scrollValue);
+     camera.position.y = lerp(10, -5, scrollValue);
      camera.position.x = lerp(0, -35, scrollValue);
      camera.rotation.y = lerp(0, -Math.PI * 0.2, scrollValue);
      camera.updateProjectionMatrix();
      //controls.update();
-     //const v = camera.position;
-     // console.log(
-     //      `(${v.x.toFixed(2)}, ${v.y.toFixed(2)}, ${v.z.toFixed(2)})`
-     // );
-     renderer.render(scene, camera);
-     stats.end();
+     //renderer.render(scene, camera);
+     composer.render();
+     //stats.end();
      window.requestAnimationFrame(tick);
 
 };
@@ -259,3 +275,6 @@ tick();
 // camera.rotation.z = lerp(-Math.PI, -Math.PI / 1.2, scrollValue);
 // camera.rotation.y = lerp(0, Math.PI / 3.5, scrollValue);
 // camera.rotation.x = lerp(Math.PI, Math.PI / 1.25, scrollValue);
+
+//camera.position.set(380, 15, 260);
+//camera.lookAt(0,-100, 0) //position 1

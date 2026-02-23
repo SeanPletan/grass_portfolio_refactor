@@ -1,3 +1,16 @@
+@font-face {
+     font-family: 'Comfortaa';
+     src: url(/Comfortaa-Regular.ttf);
+}
+@font-face {
+     font-family: 'Pixelout';
+     src: url(/Pixelout.ttf);
+} 
+@font-face {
+     font-family: 'BebasNeue';
+     src: url(/home/shami/Desktop/grass_portfolio_refactor/public/BebasNeue-Regular.ttf);
+}
+
 * {
      font-family: 'Inter', sans-serif;
      margin: 0;
@@ -5,13 +18,31 @@
 }
 
 h1 {
-     font-size: 24px;
+     font-family: 'Comfortaa';
+     font-size: 40px;
+     font-weight: bold;
+     line-height: 1;
+}
+
+h2 {
+     font-family: 'Comfortaa';
+     font-size: 18px;
      font-weight: bold;
      line-height: 1;
 }
 
 h3 {
      font-size: 14px;
+}
+
+p {
+     font-size: 12px;
+}
+
+a {
+     font-family: inherit;
+     color: inherit;
+     text-decoration: inherit;
 }
 
 .webgl {
@@ -24,25 +55,27 @@ h3 {
 #nav {
      position: absolute;
      padding-left: 5px;
-     padding-top: 30px;
-     padding-bottom: 30px;
-     height: calc(100vh - 60px);
+     padding-top: 20px;
+     padding-bottom: 20px;
+     height: calc(100vh - 40px);
+     min-height: 500px;
      display: flex;
      flex-direction: column;
      justify-content: space-between;
 }
 
 .nav-button {
+     padding: 10px 5px;
      writing-mode: sideways-lr;
      color: white;
-
 }
 
 #name {
      position: absolute;
+     font-size: 40px;
      top: 5px;
      left: 200px;
-     color: black;
+     color: rgb(255, 255, 255);
 }
 
 #overlay-content {
@@ -59,11 +92,22 @@ h3 {
      padding: 20px 0px 20px 20px;
      right: 0vw;
      width: calc(40vw - 40px);
-     background: rgba(255, 255, 255, 0.4);
-     backdrop-filter: blur(6px);
-     color: rgb(41, 41, 41);
+     color: rgb(0, 0, 0);
      display: none;
      overflow: hidden;
+     border-radius: 0;
+     border-top-left-radius: 20px;
+     border-bottom-left-radius: 20px;
+}
+#overlay::before {
+border-radius: 0;
+     border-top-left-radius: 20px;
+     border-bottom-left-radius: 20px;
+}
+#overlay::after {
+border-radius: 0;
+     border-top-left-radius: 20px;
+     border-bottom-left-radius: 20px;
 }
 
 #scroll-space {
@@ -76,3 +120,33 @@ h3 {
 /*VISUAL GUIDE FROM APPLE LIQUID GLASS UI:*/
 
 /*https: //www.apple.com/newsroom/images/2025/06/apple-introduces-a-delightful-and-elegant-new-software-design/article/Apple-WWDC25-Liquid-Glass-Icon-Composer-250609_big.jpg.large.jpg*/
+
+.glass-card {
+     position: relative;
+     border-radius: 20px;
+     isolation: isolate;
+     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+     box-shadow: 0px 6px 24px rgba(0, 0, 0, 0.2);
+     backdrop-filter: blur(2px);
+     -webkit-backdrop-filter: blur(2px);
+     border: 1px solid rgba(255, 255, 255, 0.6);
+     background: rgba(255, 255, 255, 0.1);
+}
+.glass-card::before {
+     content: '';
+     position: absolute;
+     inset: 0;
+     z-index: -1;
+     border-radius: 20px;
+     box-shadow: inset 0 0 20px -5px rgba(255, 255, 255, 0.7);
+     background: rgba(255, 255, 255, 0.05);
+}
+.glass-card::after {
+     content: '';
+     position: absolute;
+     inset: 0;
+     z-index: -2;
+     border-radius: 28px;
+     backdrop-filter: blur(2px);
+     isolation: isolate;
+}
