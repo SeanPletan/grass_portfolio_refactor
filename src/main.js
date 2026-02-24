@@ -1,5 +1,4 @@
 import * as THREE from 'three'
-import * as utils from './utils'
 import './routes/about'
 import './routes/contact'
 import './routes/projects'
@@ -16,6 +15,7 @@ import vshGroundText from './shaders/ground_vertex_shader.glsl?raw';
 import getAboutMePage from './routes/about'
 import getProjectsPage from './routes/projects'
 import getContactPage from './routes/contact'
+import get404Page from './routes/404';
 
 //var stats = new Stats();
 //stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
@@ -153,38 +153,56 @@ scene.add(camera);
 
 
 
-const overlay = document.getElementById("overlay");
-
-const routes = {
-     '#/': getAboutMePage,
-     '#/projects': getProjectsPage,
-     '#/contact': getContactPage
-};
 
 
-window.addEventListener("click", (event) => {
 
-     if (overlay.contains(event.target))
-          return;
-     // Convert mouse position to normalized device coordinates (-1 to +1)
-     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-     mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
-     raycaster.setFromCamera(mouse, camera);
+canvas.addEventListener("click", () => {
+     history.pushState(null, '', '/');
+     handleRouteChange();
+});
 
-     const intersects = raycaster.intersectObjects(clickable, true);
+function handleRouteChange() {
+     const path = window.location.pathname;
+     let view;
 
-     const links = document.getEle
-
-     if (intersects.length > 0) {
-          const clickedObject = intersects[0].object;
-
-          if (clickedObject.userData.clickable) {
-               utils.showOverlay(overlay);
-               return;
-          }
+     switch (path) {
+          case '/':
+               document.getElementById('overlay').style.display = "none";
+               break;
+          case '/about':
+               view = getAboutMePage();
+               document.getElementById('overlay-content').innerHTML = view;
+               document.getElementById('overlay').style.display = "block";
+               break;
+          case '/projects':
+               view = getProjectsPage();
+               document.getElementById('overlay-content').innerHTML = view;
+               document.getElementById('overlay').style.display = "block";
+               break;
+          case '/contact':
+               view = getContactPage();
+               document.getElementById('overlay-content').innerHTML = view;
+               document.getElementById('overlay').style.display = "block";
+               break;
+          default:
+               view = get404Page();
+               document.getElementById('overlay-content').innerHTML = view;
+               document.getElementById('overlay').style.display = "block";
      }
-     utils.hideOverlay(overlay);
+
+}
+
+handleRouteChange();
+
+window.addEventListener('popstate', handleRouteChange);
+
+document.querySelectorAll('.route').forEach(link => {
+     link.addEventListener('click', function (e) {
+          e.preventDefault();
+          history.pushState(null, '', this.href);
+          handleRouteChange();
+     });
 });
 
 function lerp(a, b, t) {
@@ -200,19 +218,7 @@ window.addEventListener("wheel", (event) => {
           scrollValue += event.deltaY * 0.001;
           scrollValue = Math.min(Math.max(scrollValue, 0), 1);
      }
-     else
-          console.log("not in da div");
 });
-
-function handleRoute() {
-     const hash = window.location.hash || '#/'; // Default to home if no hash
-     const content = routes[hash] ? routes[hash]() : '<h1>Page Not Found</h1>';
-     document.getElementById('overlay-content').innerHTML = content;
-}
-
-// Listen for navigation events
-window.addEventListener('hashchange', handleRoute);
-window.addEventListener('load', handleRoute);
 
 //const controls = new OrbitControls(camera, canvas);
 //controls.target.set(0, 5, 0);
