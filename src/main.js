@@ -169,7 +169,7 @@ function handleRouteChange() {
      switch (path) {
           case '/':
                document.getElementById('overlay').classList.remove("overlay--panel");
-               //document.getElementById('overlay').classList.remove("overlay--expanded");
+               document.getElementById('overlay').classList.remove("overlay--expanded");
                document.getElementById('overlay').classList.add("overlay--hidden");
                break;
           case '/about':
