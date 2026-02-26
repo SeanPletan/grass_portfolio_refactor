@@ -147,7 +147,7 @@ clickable.push(monolith)
 
 
 const camera = new THREE.PerspectiveCamera(80, screenSizes.width / screenSizes.height, 0.1, 750);
-camera.position.set(0, 10, -310);
+camera.position.set(70, 10, -310);
 camera.lookAt(0, 0, 0);
 scene.add(camera);
 
@@ -168,27 +168,30 @@ function handleRouteChange() {
 
      switch (path) {
           case '/':
-               document.getElementById('overlay').style.display = "none";
+               document.getElementById('overlay').classList.remove("overlay--panel");
+               //document.getElementById('overlay').classList.remove("overlay--expanded");
+               document.getElementById('overlay').classList.add("overlay--hidden");
                break;
           case '/about':
                view = getAboutMePage();
                document.getElementById('overlay-content').innerHTML = view;
-               document.getElementById('overlay').style.display = "block";
+               document.getElementById('overlay').classList.add("show-ui");
                break;
           case '/projects':
                view = getProjectsPage();
                document.getElementById('overlay-content').innerHTML = view;
-               document.getElementById('overlay').style.display = "block";
+               document.getElementById('overlay').classList.remove("overlay--hidden");
+               document.getElementById('overlay').classList.add("overlay--panel");
                break;
           case '/contact':
                view = getContactPage();
                document.getElementById('overlay-content').innerHTML = view;
-               document.getElementById('overlay').style.display = "block";
+               document.getElementById('overlay').classList.add("show-ui");
                break;
           default:
                view = get404Page();
                document.getElementById('overlay-content').innerHTML = view;
-               document.getElementById('overlay').style.display = "block";
+               document.getElementById('overlay').classList.add("show-ui");
      }
 
 }
@@ -252,23 +255,73 @@ window.addEventListener('resize', onResize);
 const timer = new THREE.Timer();
 timer.connect(document);
 
+const nav = document.getElementById('nav');
+const name = document.getElementById('name');
+const overlay = document.getElementById('overlay');
+
+let uiShown = false;
+const threshold = 0.5;
+
+document.addEventListener("click", function (e) {
+     const icon = e.target.closest("[data-action]");
+
+     if (!icon) return;
+
+     const action = icon.dataset.action;
+
+     if (action === "expand") {
+          handleExpand();
+     }
+});
+
+//TODO: Use URL query parameters to track expanded state
+let expanded = false;
+function handleExpand() {
+
+     if (expanded == false) {
+          overlay.classList.remove("overlay--panel");
+          overlay.classList.add("overlay--expanded");
+          expanded = true;
+     }
+     else {
+          overlay.classList.remove("overlay--expanded");
+          overlay.classList.add("overlay--panel");
+          expanded = false;
+     }
+}
+
 const tick = () => {
      //stats.begin();
      timer.update();
      const elapsedTime = timer.getElapsed();
      uniforms.time.value = elapsedTime;
      camera.fov = lerp(80, 100, scrollValue);
-     camera.position.z = lerp(-310, -35, scrollValue);
+     camera.position.z = lerp(-310, -30, scrollValue);
      camera.position.y = lerp(10, -5, scrollValue);
-     camera.position.x = lerp(0, -35, scrollValue);
-     camera.rotation.y = lerp(0, -Math.PI * 0.2, scrollValue);
+     camera.position.x = lerp(0, -30, scrollValue);
+     //camera.rotation.z = lerp(-Math.PI, -Math.PI * 1.1, scrollValue);
+     camera.rotation.y = lerp(0, Math.PI * -0.2, scrollValue);
+     //camera.rotation.x = lerp(Math.PI, Math.PI * 0.8, scrollValue);
      camera.updateProjectionMatrix();
-     //controls.update();
-     //renderer.render(scene, camera);
+
+
+     // 🔥 UI trigger logic
+     if (scrollValue > threshold && !uiShown) {
+          nav.classList.add("show-ui");
+          name.classList.add("show-ui");
+          uiShown = true;
+     }
+
+     if (scrollValue <= threshold && uiShown) {
+          nav.classList.remove("show-ui");
+          name.classList.remove("show-ui");
+          history.pushState(null, '', '/');
+          handleRouteChange();
+          uiShown = false;
+     }
      composer.render();
      //stats.end();
      window.requestAnimationFrame(tick);
-
 };
 tick();
 

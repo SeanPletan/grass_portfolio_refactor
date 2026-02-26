@@ -1,6 +1,11 @@
 export default function getProjectsPage() {
      return `
-<h1>Projects</h1></br>
+<h1>Projects
+     <svg class="icon" data-action="expand" width="24" height="24" fill="#111111" viewBox="0 0 24 24" transform="" id="injected-svg"
+          xmlns="http://www.w3.org/2000/svg"><!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+          <path d="M10 3H3v7h2V5h5zm0 16H5v-5H3v7h7zm11-5h-2v5h-5v2h7zm0-11h-7v2h5v5h2z"></path>
+     </svg>
+</h1>
 <p>Proin tincidunt tempus dui vitae pellentesque. Integer egestas volutpat tortor nec varius. Ut ante nunc, vehicula eu mauris at, pharetra mollis metus. Proin efficitur, elit a dapibus porttitor, nisl massa eleifend augue, ut fermentum dolor lorem et lacus. Phasellus et augue at augue tincidunt aliquet. Nunc sit amet felis non odio porta egestas. Phasellus ut urna hendrerit, vulputate eros vitae, hendrerit magna. Nullam hendrerit lorem nibh. Nam nec nulla aliquet, sodales risus auctor, bibendum dolor. Donec in imperdiet sapien. Aenean urna augue, mattis ac placerat vitae, pharetra at ex. Donec facilisis mauris finibus lectus sollicitudin consequat. Curabitur vel felis consequat, convallis justo in, euismod metus. Sed at tellus libero.
 </br>
 </br>
