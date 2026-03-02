@@ -175,7 +175,8 @@ function handleRouteChange() {
           case '/about':
                view = getAboutMePage();
                document.getElementById('overlay-content').innerHTML = view;
-               document.getElementById('overlay').classList.add("show-ui");
+               document.getElementById('overlay').classList.remove("overlay--hidden");
+               document.getElementById('overlay').classList.add("overlay--panel");
                break;
           case '/projects':
                view = getProjectsPage();
@@ -186,12 +187,14 @@ function handleRouteChange() {
           case '/contact':
                view = getContactPage();
                document.getElementById('overlay-content').innerHTML = view;
-               document.getElementById('overlay').classList.add("show-ui");
+               document.getElementById('overlay').classList.remove("overlay--hidden");
+               document.getElementById('overlay').classList.add("overlay--panel");
                break;
           default:
                view = get404Page();
                document.getElementById('overlay-content').innerHTML = view;
-               document.getElementById('overlay').classList.add("show-ui");
+               document.getElementById('overlay').classList.remove("overlay--hidden");
+               document.getElementById('overlay').classList.add("overlay--panel");
      }
 
 }
