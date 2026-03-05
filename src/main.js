@@ -3,6 +3,7 @@ import './routes/about'
 import './routes/contact'
 import './routes/projects'
 import { HDRLoader } from 'three/addons/loaders/HDRLoader.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
@@ -127,21 +128,24 @@ scene.add(grass);
 
 
 //Make monolith
-const monolithGeometry = new THREE.BoxGeometry(10, 75, 10);
-const monolithMaterial = new THREE.MeshPhysicalMaterial({
-     roughness: 1.0,
-     color: new THREE.Color('white'),
-})
-const monolith = new THREE.Mesh(monolithGeometry, monolithMaterial)
+//const monolithGeometry = new THREE.BoxGeometry(10, 75, 10);
+//const monolithMaterial = new THREE.MeshPhysicalMaterial({
+//     roughness: 1.0,
+//     color: new THREE.Color('white'),
+//})
+//const monolith = new THREE.Mesh(monolithGeometry, monolithMaterial)
 //monolith.position.set(0, 0, 0)
-monolith.rotation.x = 0.2
-monolith.rotation.z = -0.2
-monolith.rotation.y = 0.3
-scene.add(monolith)
-monolith.userData.clickable = true;
-clickable.push(monolith)
+//monolith.rotation.x = 0.2
+//monolith.rotation.z = -0.2
+//monolith.rotation.y = 0.3
+//scene.add(monolith)
+//monolith.userData.clickable = true;
+//clickable.push(monolith)
 
-
+//Make Wares_Statue
+const loader = new GLTFLoader();
+const wares_stae = await loader.loadAsync( 'models/gltf/duck/duck.gltf' );
+scene.add( gltf.scene );
 
 
 
